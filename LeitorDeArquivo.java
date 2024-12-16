@@ -3,12 +3,12 @@ import java.util.*;
 
 public class LeitorDeArquivo {
     public static void main(String[] args) {
-        String entradaArq = "../sistemas/TESTE-02.txt";
+        String entradaArq = "../sistemas/TESTE-01.txt";
         int quantum = 0;
         List<Processo> processos = new ArrayList<>();
 
         // Leitura do arquivo
-        try (BufferedReader lerArq = new BufferedReader(new FileReader(entradaArq))) {
+        try (BufferedReader lerArq = new BufferedReader(new FileReader(entradaArq))) {  
             String linha = lerArq.readLine();
             quantum = Integer.parseInt(linha);
 
@@ -26,5 +26,6 @@ public class LeitorDeArquivo {
         // Executa o algoritmo FIFO usando a classe Escalonador
         Escalonador escalonador = new Escalonador();
         escalonador.fifo(processos);
+        escalonador.sjf(processos);
     }
 }
