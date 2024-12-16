@@ -52,50 +52,73 @@ public class Escalonador {
         // Calcula as médias
         float mediaEspera = (float) totalEspera / quantidadeProcessos;
         float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
+        
 
         // Exibir os resultados
         System.out.printf("FIFO - Média de tempo de espera: %.3f\n", mediaEspera);
+        System.out.printf("FIFO - Média de tempo de resposta: %.3f\n", mediaEspera);
         System.out.printf("FIFO - Média de turnaround: %.3f\n", mediaTurnaround);
+        
     }
 
-    // Algoritmo SJF
-    public void sjf(List<Processo> processos) {
-        int clock = 0;
-        int totalEspera = 0, totalTurnaround = 0;
-        int quantidadeProcessos = processos.size();
+// Algoritmo SJF corrigido com cálculo de tempo de resposta
+public void sjf(List<Processo> processos) {
+    if (processos.isEmpty()) {
+        System.out.println("Nenhum processo para escalonar com SJF.");
+        return;
+    }
 
-        // Ordenar por tempo de chegada inicialmente
-        processos.sort(Comparator.comparingInt(p -> p.chegada));
+    int clock = 0;
+    int totalEspera = 0, totalTurnaround = 0, totalResposta = 0; // Variável para o total de tempo de resposta
+    int quantidadeProcessos = processos.size();
 
-        while (!processos.isEmpty()) {
-            // Obter os processos disponíveis
-            List<Processo> disponiveis = new ArrayList<>();
-            for (Processo p : processos) {
-                if (p.chegada <= clock) {
-                    disponiveis.add(p);
-                }
-            }
+    // Ordenar inicialmente os processos por tempo de chegada
+    processos.sort(Comparator.comparingInt(p -> p.chegada));
+    List<Processo> filaProntos = new ArrayList<>();
 
-            if (!disponiveis.isEmpty()) {
-                // Escolher o processo com menor tempo de execução
-                disponiveis.sort(Comparator.comparingInt(p -> p.execucao));
-                Processo atual = disponiveis.get(0);
-                processos.remove(atual);
-
-                clock += atual.execucao;
-                totalEspera += clock - atual.chegada - atual.execucao;
-                totalTurnaround += clock - atual.chegada;
-            } else {
-                clock++;
+    while (!processos.isEmpty() || !filaProntos.isEmpty()) {
+        // Mover processos disponíveis para a fila de prontos
+        Iterator<Processo> it = processos.iterator();
+        while (it.hasNext()) {
+            Processo p = it.next();
+            if (p.chegada <= clock) {
+                filaProntos.add(p);
+                it.remove();
             }
         }
 
-        float mediaEspera = (float) totalEspera / quantidadeProcessos;
-        float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
+        if (!filaProntos.isEmpty()) {
+            // Escolher o processo com menor tempo de execução
+            filaProntos.sort(Comparator.comparingInt(p -> p.execucao));
+            Processo atual = filaProntos.remove(0);
 
-        System.out.printf("SJF - Média de tempo de espera: %.3f\n", mediaEspera);
-        System.out.printf("SJF - Média de turnaround: %.3f\n", mediaTurnaround);
+            // Se o processo ainda não foi executado, calcular o tempo de resposta
+            if (atual.espera == 0) {
+                atual.espera = clock - atual.chegada;
+                totalResposta += atual.espera; // Adiciona o tempo de resposta
+            }
+
+            // Executar o processo
+            clock += atual.execucao;
+            totalEspera += clock - atual.chegada - atual.execucao;
+            totalTurnaround += clock - atual.chegada;
+        } else {
+            // Avançar o clock se nenhum processo estiver pronto
+            clock++;
+        }
     }
+
+    // Calcular as médias
+    float mediaEspera = (float) totalEspera / quantidadeProcessos;
+    float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
+    float mediaResposta = (float) totalResposta / quantidadeProcessos; // Média de tempo de resposta
+
+    // Exibir os resultados
+    System.out.printf("SJF - Média de tempo de espera: %.3f\n", mediaEspera);
+    System.out.printf("SJF - Média de tempo de turnaround: %.3f\n", mediaTurnaround);
+    System.out.printf("SJF - Média de tempo de resposta: %.3f\n", mediaResposta); // Exibe a média de tempo de resposta
+}
+
 
     // Algoritmo Round Robin
     public void rr(List<Processo> processos, int quantum) {

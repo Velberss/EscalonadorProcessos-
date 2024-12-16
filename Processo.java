@@ -1,13 +1,17 @@
-public class Processo {
+import java.util.*;
+
+class Processo {
+    int id;
     int chegada;
     int execucao;
-    int espera;
     int tempoRestante;
+    int espera;
 
-    public Processo(int chegada, int execucao) {
+    public Processo( int chegada, int execucao) {
+        this.id = id;
         this.chegada = chegada;
         this.execucao = execucao;
-        this.espera = 0;
         this.tempoRestante = execucao;
+        this.espera = 0;
     }
 }
