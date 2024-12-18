@@ -36,9 +36,9 @@ public class Escalonador {
         float mediaEspera = (float) totalEspera / quantidadeProcessos;
         float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
 
-        resultado.append("FIFO - Média de tempo de resposta: ").append(String.format("%.3f", mediaEspera)).append("\n");
-        resultado.append("FIFO - Média de tempo de espera: ").append(String.format("%.3f", mediaEspera)).append("\n");
-        resultado.append("FIFO - Média de turnaround: ").append(String.format("%.3f", mediaTurnaround)).append("\n");
+        resultado.append("").append(String.format("%.3f", mediaEspera)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaEspera)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaTurnaround)).append("");
 
         return resultado.toString();
     }
@@ -84,9 +84,9 @@ public class Escalonador {
         float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
         float mediaResposta = (float) totalResposta / quantidadeProcessos;
 
-        resultado.append("SJF - Média de tempo de resposta: ").append(String.format("%.3f", mediaResposta)).append("\n");
-        resultado.append("SJF - Média de tempo de espera: ").append(String.format("%.3f", mediaEspera)).append("\n");
-        resultado.append("SJF - Média de turnaround: ").append(String.format("%.3f", mediaTurnaround)).append("\n");
+        resultado.append("").append(String.format("%.3f", mediaResposta)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaEspera)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaTurnaround)).append("");
 
         return resultado.toString();
     }
@@ -144,9 +144,9 @@ public class Escalonador {
         float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
         float mediaResposta = (float) totalResposta / quantidadeProcessos;
 
-        resultado.append("RR - Média de tempo de resposta: ").append(String.format("%.3f", mediaResposta)).append("\n");
-        resultado.append("RR - Média de tempo de espera: ").append(String.format("%.3f", mediaEspera)).append("\n");
-        resultado.append("RR - Média de turnaround: ").append(String.format("%.3f", mediaTurnaround)).append("\n");
+        resultado.append("").append(String.format("%.3f", mediaResposta)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaEspera)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaTurnaround)).append("");
 
         return resultado.toString();
     }
@@ -194,9 +194,9 @@ public class Escalonador {
         float mediaTurnaround = (float) totalTurnaround / quantidadeProcessos;
         float mediaResposta = (float) totalResposta / quantidadeProcessos;
 
-        resultado.append("SRT - Média de tempo de resposta: ").append(String.format("%.3f", mediaResposta)).append("\n");
-        resultado.append("SRT - Média de tempo de espera: ").append(String.format("%.3f", mediaEspera)).append("\n");
-        resultado.append("SRT - Média de turnaround: ").append(String.format("%.3f", mediaTurnaround)).append("\n");
+        resultado.append("").append(String.format("%.3f", mediaResposta)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaEspera)).append(", ");
+        resultado.append("").append(String.format("%.3f", mediaTurnaround)).append("");
 
         return resultado.toString();
     }
